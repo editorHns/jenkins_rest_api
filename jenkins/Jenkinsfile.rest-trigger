@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'MESSAGE', defaultValue: 'Triggered from REST API')
+        choice(name: 'ENVIRONMENT', choices: ['test', 'stage', 'prod'])
+        booleanParam(name: 'DEBUG', defaultValue: false)
+    }
+    stages {
+        stage('Analyse parameters') {
+            steps {
+                echo "MESSAGE=${params.MESSAGE}"
+                echo "ENVIRONMENT=${params.ENVIRONMENT}"
+                echo "DEBUG=${params.DEBUG}"
+            }
+        }
+        stage('REST API') {
+            steps {
+                echo "REST API endpoint: POST .../buildWithParameters"
+            }
+        }
+    }
+}
